@@ -128,4 +128,30 @@ router.get("/verify", isAuthenticated, (req, res, next) => {
   res.status(200).json(req.payload);
 });
 
+router.put('/:userId', (req, res, next) => {
+  const { userId } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    res.status(400).json({ message: 'Specified id is not valid' });
+    return;
+  }
+// find by id and update method has 2 parameters ->
+// next line has 2 parameters Id if a project that we updating and req.body is where we store project
+// + new true parameter is -> it is updating name of the project bc without it we have a bug and new name is not gonna change in req . body and remove old one
+// new true lets mongoose turn the updated object and not old one
+  User.findByIdAndUpdate(userId, req.body, { new: true })
+    .then((updatedUser) => res.json(updatedUser))
+    .catch(error => res.json(error));
+});
+
+router.delete('/:userId', (req, res, next) => {
+  const { userId } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    res.status(400).json({ message: 'Specified id is not valid' });
+    return;
+  }
+  User.findByIdAndRemove(userId)
+    .then(() => res.json({ message: `Project with ${userId} is removed successfully.` }))
+    .catch(error => res.json(error));
+});
+
 module.exports = router;
