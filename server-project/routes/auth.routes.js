@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require('mongoose');
+
 
 // ℹ️ Handles password encryption
 const bcrypt = require("bcrypt");
@@ -16,7 +18,11 @@ const { isAuthenticated } = require("../middleware/jwt.middleware.js");
 // How many rounds should bcrypt run the salt (default - 10 rounds)
 const saltRounds = 10;
 
+
+
+
 // POST /auth/signup  - Creates a new user in the database
+
 router.post("/signup", (req, res, next) => {
   const { email, password, name, surname } = req.body;
 
@@ -75,6 +81,7 @@ router.post("/signup", (req, res, next) => {
 });
 
 // POST  /auth/login - Verifies email and password and returns a JWT
+
 router.post("/login", (req, res, next) => {
   const { email, password } = req.body;
 
@@ -118,15 +125,24 @@ router.post("/login", (req, res, next) => {
     .catch((err) => next(err)); // In this case, we send error handling to the error handling middleware.
 });
 
+
 // GET  /auth/verify  -  Used to verify JWT stored on the client
+
 router.get("/verify", isAuthenticated, (req, res, next) => {
+
   // If JWT token is valid the payload gets decoded by the
   // isAuthenticated middleware and is made available on `req.payload`
+
   console.log(`req.payload`, req.payload);
 
   // Send back the token payload object containing the user data
+
   res.status(200).json(req.payload);
 });
+
+
+//PUT
+
 
 router.put('/:userId', (req, res, next) => {
   const { userId } = req.params;
@@ -134,14 +150,21 @@ router.put('/:userId', (req, res, next) => {
     res.status(400).json({ message: 'Specified id is not valid' });
     return;
   }
-// find by id and update method has 2 parameters ->
-// next line has 2 parameters Id if a project that we updating and req.body is where we store project
-// + new true parameter is -> it is updating name of the project bc without it we have a bug and new name is not gonna change in req . body and remove old one
+
+// find by id and update method has 2 params ->
+// 1. Id of a project that we updating and 
+// 2. req.body is where we store project
+// + new true parameter is -> it is updating name of the project bc without it we have a 
+//bug and new name is not gonna change in req . body and remove old one
 // new true lets mongoose turn the updated object and not old one
+
   User.findByIdAndUpdate(userId, req.body, { new: true })
     .then((updatedUser) => res.json(updatedUser))
     .catch(error => res.json(error));
 });
+
+
+//DELETE
 
 router.delete('/:userId', (req, res, next) => {
   const { userId } = req.params;

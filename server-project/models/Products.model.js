@@ -16,7 +16,7 @@ const productsSchema = new Schema(
     },
     categoryOfProduct: {
       type: String,
-      enum: ["Art", "Clothes", "Home Goods","Sale"],
+      enum: ["Art", "Clothes", "Home","Sale"],
       trim: true,
     },
 

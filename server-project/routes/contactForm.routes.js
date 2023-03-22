@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Contact = '../models/ContactForm.model.js'
+const mongoose = require('mongoose');
 
 
 //  POST /api/projects  -  Creates a new project
@@ -11,6 +12,7 @@ router.post('/contact', (req, res, next) => {
       .then(response => res.json(response)) //we sending back json object - response
       .catch(err => res.json(err));
   });
+  
   //GET route getting all projects, we sending entire object as res.json(allProjects)
   router.get("/contacts", (req,res,next)=>{
      Contact.find()
@@ -42,6 +44,21 @@ router.post('/contact', (req, res, next) => {
 router.get("/", (req, res, next) => {
   res.json("All good in here");
 });
+
+
+//DELETE
+
+router.delete('/:contactId', (req, res, next) => {
+   const { userId } = req.params;
+   if (!mongoose.Types.ObjectId.isValid(userId)) {
+     res.status(400).json({ message: 'Specified id is not valid' });
+     return;
+   }
+   User.findByIdAndRemove(userId)
+     .then(() => res.json({ message: `Project with ${userId} is removed successfully.` }))
+     .catch(error => res.json(error));
+ });
+ 
 
 
 module.exports = router;

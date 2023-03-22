@@ -1,16 +1,20 @@
 const express = require("express");
 const router = express.Router();
 const Product = '../models/ContactForm.model.js'
+const mongoose = require('mongoose');
 
 
-//  POST /api/projects  -  Creates a new product
-router.post('/product', (req, res, next) => {
+//  POST /api/products  -  Creates a new product
+
+router.post('/products', (req, res, next) => {
     const { brand, nameOfProduct, categoryOfProduct, image,price,size, quantity, RelatedProducts, ProductDetails } = req.body; //destructuring
     //we creating a project - mongoose method
     Product.create({ brand, nameOfProduct, categoryOfProduct, image,price,size, quantity, RelatedProducts, ProductDetails })
       .then(response => res.json(response)) //we sending back json object - response
       .catch(err => res.json(err));
   });
+
+
   //GET route getting all projects, we sending entire object as res.json(allProjects)
   router.get("/products", (req,res,next)=>{
      Product.find()
@@ -22,6 +26,8 @@ router.post('/product', (req, res, next) => {
         console.log(err)
      })
   })
+
+  
   //Get route individual project
   router.get("/products/:productId", (req,res,next)=>{
   //  console.log(req.params.contactId)
