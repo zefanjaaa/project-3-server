@@ -31,15 +31,21 @@ const userSchema = new Schema(
     wishlist: {
       type: Array,
       unique: true,
+      sparse:true,
     },
     shoppingCard: {
       type: Array,
       unique: true,
+      sparse:true,
     },
     isAdmin: {
       type: Boolean,
       default: false,
     },
+    productsId: {type: Schema.Types.ObjectId, ref: "Products" },
+
+    contactId: {type: Schema.Types.ObjectId, ref: "Contact" },
+  
   },
   {
     // this second object adds extra properties: `createdAt` and `updatedAt`

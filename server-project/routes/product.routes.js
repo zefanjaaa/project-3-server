@@ -5,9 +5,9 @@ const Product = '../models/ContactForm.model.js'
 
 //  POST /api/projects  -  Creates a new product
 router.post('/product', (req, res, next) => {
-    const { brand, nameOfProduct, categoryOfProduct, image,price,size, quantity, RelatedProducts, ProductDetails, } = req.body; //destructuring
+    const { brand, nameOfProduct, categoryOfProduct, image,price,size, quantity, RelatedProducts, ProductDetails } = req.body; //destructuring
     //we creating a project - mongoose method
-    Product.create({ email,name,text })
+    Product.create({ brand, nameOfProduct, categoryOfProduct, image,price,size, quantity, RelatedProducts, ProductDetails })
       .then(response => res.json(response)) //we sending back json object - response
       .catch(err => res.json(err));
   });

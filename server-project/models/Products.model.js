@@ -40,9 +40,11 @@ const productsSchema = new Schema(
     },
     RelatedProducts:{
       type: Array,
+      sparse:true,
     },
     ProductDetails:{
       type: Array,
+      sparse:true,
     },
     user_id: { type: Schema.Types.ObjectId, ref: "User" },
   },
