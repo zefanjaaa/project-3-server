@@ -41,7 +41,7 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    productsId: {type: Schema.Types.ObjectId, ref: "Products" },
+    // productsId: {type: Schema.Types.ObjectId, ref: "Products" },
 
     contactId: {type: Schema.Types.ObjectId, ref: "Contact" },
   
