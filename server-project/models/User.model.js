@@ -28,16 +28,15 @@ const userSchema = new Schema(
       required: [true, "Surname is required."],
       trim: true,
     },
-    wishlist: {
-      type: Array,
-      unique: true,
-      sparse:true,
-    },
-    shoppingCard: {
-      type: Array,
-      unique: true,
-      sparse:true,
-    },
+    
+
+    wishlist: [{
+      type:Schema.Types.ObjectId, ref:'Products'
+    }],
+    shoppingCard: [{
+      type:Schema.Types.ObjectId, ref:'Products'
+    }],
+
     isAdmin: {
       type: Boolean,
       default: false,

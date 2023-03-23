@@ -141,7 +141,7 @@ router.get("/verify", isAuthenticated, (req, res, next) => {
 });
 
 
-//PUT
+//PUT update
 
 
 router.put('/:userId', (req, res, next) => {
@@ -173,7 +173,7 @@ router.delete('/:userId', (req, res, next) => {
     return;
   }
   User.findByIdAndRemove(userId)
-    .then(() => res.json({ message: `Project with ${userId} is removed successfully.` }))
+    .then(() => res.json({ message: `User with ${userId} is removed successfully.` }))
     .catch(error => res.json(error));
 });
 
