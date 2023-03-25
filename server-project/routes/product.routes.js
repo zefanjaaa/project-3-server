@@ -27,6 +27,7 @@ router.post('/product', (req, res, next) => {
      })
   })
 
+ 
   
 //GET route for one product
   router.get("/products/:productId", (req,res,next)=>{

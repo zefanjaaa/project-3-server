@@ -105,10 +105,10 @@ router.post("/login", (req, res, next) => {
 
       if (passwordCorrect) {
         // Deconstruct the user object to omit the password
-        const { _id, email, name } = foundUser;
+        const { _id, email, name, surname } = foundUser;
 
         // Create an object that will be set as the token payload
-        const payload = { _id, email, name };
+        const payload = { _id, email, name , surname};
 
         // Create a JSON Web Token and sign it
         const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
@@ -141,12 +141,30 @@ router.get("/verify", isAuthenticated, (req, res, next) => {
 });
 
 
+//GET ONE USER
 
+router.get('/:userId', isAuthenticated,(req, res, next) => {
+  const { userId } = req.params
+
+  
+  if (!mongooseTypes.ObjectId.isValid(userId)) {
+    res.status(400).json({ message: "Specified id is not valid" })
+    return
+  }
+
+  User.findById(userId)
+    .populate("Products")
+    .then((user) => res.status(200).json(user))
+    .catch((error) => {
+      console.log('THERE IS AN ERROR', error)
+      res.json(error)
+  })
+})
 
 //PUT update
 
 
-router.put('/:userId', (req, res, next) => {
+router.put('/:userId',  isAuthenticated,(req, res, next) => {
   const { userId } = req.params;
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     res.status(400).json({ message: 'Specified id is not valid' });
