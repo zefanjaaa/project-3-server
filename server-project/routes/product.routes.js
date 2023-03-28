@@ -2,7 +2,20 @@ const express = require("express");
 const router = express.Router();
 const Product = require ("../models/Products.model")
 const mongoose = require('mongoose');
-const imageUpload = require("../config/cloudinary.config")
+const fileUploader = require("../config/cloudinary.config")
+
+
+//UPLOAD IMAGE TO CLOUDINARY ROUTE "/product/upload"
+
+router.post('/upload', fileUploader.single('image'), (req, res, next) => {
+  console.log('The file that is being uploaded ==>', req.file)
+  
+  if (!req.file) {
+    next(new Error('NO FILE BEING UPLOADED'))
+    return
+  }
+  res.json({fileUrl:req.file.path})
+})
 
 //  POST Create new product
 
