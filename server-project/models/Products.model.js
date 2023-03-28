@@ -43,7 +43,7 @@ const productsSchema = new Schema(
       sparse:true,
     },
     ProductDetails:{
-      type: Array,
+      type: String,
       sparse:true,
     },
     user_id: { type: Schema.Types.ObjectId, ref: "User" },
