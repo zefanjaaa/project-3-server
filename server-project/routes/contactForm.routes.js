@@ -6,9 +6,9 @@ const mongoose = require('mongoose');
 
 //  POST create Contact
 router.post('/contact', (req, res, next) => {
-    const { email,name,text } = req.body; //destructuring
+    const { email,name,text,title } = req.body; //destructuring
   
-    Contact.create({ email,name,text })
+    Contact.create({ email,name,text,title })
       .then(response => res.json(response)) 
       .catch(err => res.json(err));
   });
