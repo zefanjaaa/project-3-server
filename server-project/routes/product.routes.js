@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Product = require ("../models/Products.model")
 const mongoose = require('mongoose');
+const User = require('../models/User.model')
 const fileUploader = require("../config/cloudinary.config")
 
 
@@ -16,6 +17,48 @@ router.post('/upload', fileUploader.single('image'), (req, res, next) => {
   }
   res.json({fileUrl:req.file.path})
 })
+
+//Route to add a product to your wishlist
+
+router.post('/product/:userId/wishlist', (req, res, next) => {
+
+  const { userId } = req.params
+  const {productId} = req.body
+
+  User.findById(userId)
+   
+    .then(user => {
+      if (!user) {
+      return res.status(404).json({error:"user does not excist"})
+      }
+      console.log(user)
+      user.wishlist.push(productId)
+      user.save()
+        .then((user) => { res.json(user) })
+      
+      .catch((err) => res.status(404).json({error:err.message}))
+    })
+    .catch((err) => res.status(404).json({error:err.message}))
+  
+
+})
+
+//route to retrieve your wishlist from the backend
+
+router.get('/auth/:UserId/wishlist', (req, res, next) => {
+  const { userId } = req.params
+  
+  User.findById(userId)
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({error:"user does not excist"})
+      } else {
+        res.json(user.wishlist)
+    }
+    })
+  .catch((err) => res.status(404).json({error:err.message}))
+})
+
 
 //  POST Create new product
 
