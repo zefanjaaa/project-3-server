@@ -16,7 +16,7 @@ router.post('/contact', (req, res, next) => {
   //GET route getting all contacts
   router.get("/contacts", (req,res,next)=>{
      Contact.find()
-    //  .populate('user')
+  
      .then(allContacts=>{
         res.json(allContacts)
      })

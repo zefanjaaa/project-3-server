@@ -32,6 +32,7 @@ router.post('/product/:userId/wishlist', (req, res, next) => {
       return res.status(404).json({error:"user does not excist"})
       }
       console.log(user)
+      console.log('hello',productId)
       user.wishlist.push(productId)
       user.save()
         .then((user) => { res.json(user) })
@@ -45,7 +46,7 @@ router.post('/product/:userId/wishlist', (req, res, next) => {
 
 //route to retrieve your wishlist from the backend
 
-router.get('/auth/:UserId/wishlist', (req, res, next) => {
+router.get('/product/:userId/wishlist', (req, res, next) => {
   const { userId } = req.params
   
   User.findById(userId)
@@ -53,7 +54,8 @@ router.get('/auth/:UserId/wishlist', (req, res, next) => {
       if (!user) {
         return res.status(404).json({error:"user does not excist"})
       } else {
-        res.json(user.wishlist)
+        console.log(user.wishlist)
+        res.json(user)
     }
     })
   .catch((err) => res.status(404).json({error:err.message}))
