@@ -61,6 +61,31 @@ router.get('/product/:userId/wishlist', (req, res, next) => {
   .catch((err) => res.status(404).json({error:err.message}))
 })
 
+//route to remove an item from your wishlist
+
+router.delete('/:userId/wishlist/:productId', (req, res) => {
+  const { userId,productId } = req.params 
+  // const {productId} =  req.body
+  console.log(req.params)
+
+  User.findById(userId)
+    .then((user) => {
+      if (!user) {
+      return res.status(404).json({error:'user does not excists'})
+      } 
+      const itemSpot = user.wishlist.findIndex((item) => item == productId)
+      if (itemSpot === -1) {
+        return res.status(404).json({message:"product not found in your wishlist"})
+      }
+      user.wishlist.splice(itemSpot, 1)
+      return user.save()
+    })
+    .then(() => {
+    res.status(200).json({message:'product removed from your wishlist'})
+    })
+  .catch((error) => {console.log('there is an error'),error})
+})
+
 
 //  POST Create new product
 
