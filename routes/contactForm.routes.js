@@ -54,8 +54,8 @@ router.delete('/contacts/:contactId', (req, res, next) => {
      res.status(400).json({ message: 'Specified id is not valid' });
      return;
    }
-   Contact.findByIdAndRemove(contactId)
-     .then(() => res.json({ message: `Project with ${contactId} is removed successfully.` }))
+   Contact.findByIdAndRemove(req.params.contactId)
+     .then(() => res.json({ message: `Contact with ${contactId} is removed successfully.` }))
      .catch(error => res.json(error));
  });
  
