@@ -48,7 +48,7 @@ router.get("/", (req, res, next) => {
 
 //DELETE
 
-router.delete('/:contactId', (req, res, next) => {
+router.delete('/contacts/:contactId', (req, res, next) => {
    const { contactId } = req.params;
    if (!mongoose.Types.ObjectId.isValid(contactId)) {
      res.status(400).json({ message: 'Specified id is not valid' });
